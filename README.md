@@ -2,7 +2,7 @@
 
 App móvil para controlar gastos, ingresos y metas de ahorro. Hecha con Expo (React Native + TypeScript) y Supabase.
 
-Integrantes: Carlos Carriazo, Mateo Estrada Serna, María Camila Restrepo Izquierdo.
+Integrantes:  Mateo Estrada Serna y María Camila Restrepo Izquierdo.
 
 ## Cómo ejecutar
 
