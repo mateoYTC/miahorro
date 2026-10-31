@@ -7,6 +7,7 @@ export type Usuario = {
 export type Categoria = {
   id_categoria: number;
   nombre_categoria: string;
+  id_usuario: string;
 };
 
 export type Gasto = {

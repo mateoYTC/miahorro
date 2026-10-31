@@ -39,7 +39,7 @@ export default function GastosScreen({ navigation }: any) {
   const cargarDatos = async () => {
     if (!user) return;
     const respuestaGastos = await obtenerGastos(user.id);
-    const respuestaCategorias = await obtenerCategorias();
+    const respuestaCategorias = await obtenerCategorias(user.id);
 
     if (respuestaGastos.error) mostrarAlerta('Error', mensajeError(respuestaGastos.error));
     else setGastos(respuestaGastos.data || []);

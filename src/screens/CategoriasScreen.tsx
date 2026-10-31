@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { useAuth } from '../context/AuthContext';
 import { obtenerCategorias, crearCategoria, editarCategoria, eliminarCategoria } from '../services/categoriasService';
 import { Categoria } from '../types';
 import Boton from '../components/Boton';
@@ -12,6 +13,7 @@ import { mensajeError } from '../utils/formato';
 import { mostrarAlerta, confirmar } from '../utils/alertas';
 
 export default function CategoriasScreen({ navigation }: any) {
+  const { user } = useAuth();
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [cargando, setCargando] = useState(true);
   const [guardando, setGuardando] = useState(false);
@@ -27,7 +29,8 @@ export default function CategoriasScreen({ navigation }: any) {
   }, [navigation]);
 
   const cargarCategorias = async () => {
-    const { data, error } = await obtenerCategorias();
+    if (!user) return;
+    const { data, error } = await obtenerCategorias(user.id);
     if (error) mostrarAlerta('Error', mensajeError(error));
     else setCategorias(data || []);
     setCargando(false);
@@ -42,8 +45,10 @@ export default function CategoriasScreen({ navigation }: any) {
   const guardarCategoria = async () => {
     if (!nombre) return mostrarAlerta('Error', 'El nombre es obligatorio.');
 
+    if (!user) return;
+
     setGuardando(true);
-    const { error } = editandoId ? await editarCategoria(editandoId, nombre) : await crearCategoria(nombre);
+    const { error } = editandoId ? await editarCategoria(editandoId, nombre) : await crearCategoria(user.id, nombre);
     setGuardando(false);
 
     if (error) return mostrarAlerta('Error', mensajeError(error));

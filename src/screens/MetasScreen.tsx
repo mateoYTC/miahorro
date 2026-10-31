@@ -98,7 +98,7 @@ export default function MetasScreen({ navigation }: any) {
 
     // El abono también cuenta como un gasto (categoría "Ahorro") para que baje el saldo del Inicio
     if (user) {
-      const categoria = await obtenerCategoriaAhorro();
+      const categoria = await obtenerCategoriaAhorro(user.id);
       let errorGasto = categoria.error;
       if (!errorGasto && categoria.id) {
         const respuesta = await crearGasto(user.id, {

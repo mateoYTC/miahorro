@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 import { crearUsuario } from '../services/usuariosService';
+import { crearCategoriasIniciales } from '../services/categoriasService';
 import { mensajeError } from '../utils/formato';
 
 type AuthContextType = {
@@ -58,6 +59,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       // Guardamos el usuario en nuestra tabla "usuarios"
       const respuesta = await crearUsuario(data.user.id, nombre, email);
       if (respuesta.error) return mensajeError(respuesta.error);
+
+      // Cada usuario nuevo recibe sus propias categorías
+      const categorias = await crearCategoriasIniciales(data.user.id);
+      if (categorias.error) return mensajeError(categorias.error);
 
       return null;
     } catch (error) {

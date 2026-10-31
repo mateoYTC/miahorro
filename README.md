@@ -24,14 +24,14 @@ Integrantes: Carlos Carriazo, Mateo Estrada Serna, María Camila Restrepo Izquie
 ## Configuración de Supabase
 
 - **Authentication > Sign In / Providers > Email**: desactivar *Confirm email* para que el usuario entre apenas se registra.
-- **SQL Editor**: ejecutar `supabase/crear_tablas.sql`. Crea las 5 tablas con sus llaves, activa RLS y crea las políticas (cada usuario solo ve sus datos).
+- **SQL Editor**: ejecutar `supabase/crear_tablas.sql`. Crea las 5 tablas con sus llaves, activa RLS y crea las políticas (cada usuario solo ve sus datos). Si ya habías creado las tablas con una versión anterior, ejecuta `supabase/categorias_por_usuario.sql` (borra los datos de prueba de gastos y categorías).
 
 ## Base de datos
 
 5 tablas relacionadas:
 
 - `usuarios` (id_usuario, nombre, correo)
-- `categorias` (id_categoria, nombre_categoria)
+- `categorias` (id_categoria, nombre_categoria, id_usuario → usuarios): cada usuario tiene las suyas
 - `gastos` (id_gasto, monto, fecha, descripcion, id_categoria → categorias, id_usuario → usuarios)
 - `ingresos` (id_ingreso, monto, periodo, id_usuario → usuarios)
 - `metas_ahorro` (id_meta_ahorro, nombre_meta, monto_objetivo, monto_actual, fecha_inicio, fecha_fin, id_usuario → usuarios)
